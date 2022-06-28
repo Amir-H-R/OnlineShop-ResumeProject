@@ -1,0 +1,63 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Application.Services.Commands.AddUsers
+@model UserDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- general form elements -->
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">افزودن کاربر</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form" method="post">
+        <div class="card-body">
+
+            <span asp-validation-for="FullName" class="text-danger"> </span>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="text" class="form-control" id="fullname" name="fullname" placeholder="نام">
+            </div>
+
+            <span asp-validation-for="Email" class="text-danger"> </span>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="ایمیل">
+            </div>
+
+            <span asp-validation-for="PhoneNumber" class="text-danger"> </span>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="number" class="form-control" id="phonenumber" name="phonenumber" placeholder="شماره تلفن">
+            </div>
+
+            <span asp-validation-for="Password" class="text-danger"> </span>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="رمزعبور">
+            </div>
+
+            <span asp-validation-for="RePassword" class="text-danger"> </span>
+            <div class="form-group">
+                <input type="password" class="form-control" id="RePassword" name="RePassword" placeholder="تکرار رمزعبور ">
+            </div>
+
+            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                    <select class="form-control" id="RoleId" name="RoleId" asp-items="@ViewBag.Roles">
+                    </select>
+                    <p><small class="text-muted">سطح دسترسی کاربر مورد نظر را تعیین کنید</small></p>
+                </fieldset>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /.card -->

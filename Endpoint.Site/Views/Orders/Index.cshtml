@@ -1,0 +1,152 @@
+﻿@using Application.Services.OrderServices.Commands.AddOrder
+@model List<OrderDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<div class="content-area" dir="ltr">
+    <!-- BREADCRUMBS -->
+    <section class="page-section breadcrumbs">
+        <div class="container">
+            <div class="page-header">
+                <h1>Shopping Cart</h1>
+            </div>
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li class="active">Shopping Cart</li>
+            </ul>
+        </div>
+    </section>
+    <!-- /BREADCRUMBS -->
+    <h3 class="block-title alt" dir="ltr"><i class="fa fa-angle-down"></i>2. Orders</h3>
+    <div class="row orders" dir="ltr">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Id</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="image"><a class="media-link" href="#"><i class="fa fa-plus"></i><img width="70" height="100" src="@item.ProductIMG" alt="" /></a></td>
+                            <td class="quantity">x @item.ProductCount</td>
+                            <td class="description">
+                                <h4><a href="#"></a></h4>
+                                @item.OrderId
+                            </td>
+                            <td class="total">@item.TotalPrice </td>
+                            <td class="total"> <a href="#"><i class="fa fa-close"></i></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h3 class="block-title"><span>Shopping cart</span></h3>
+            <div class="shopping-cart">
+                <table>
+                    <tr>
+                        <td>Sub-total:</td>
+                        <td>$2,500.00</td>
+                    </tr>
+                    <tr>
+                        <td>Shipping:</td>
+                        <td>$25</td>
+                    </tr>
+                    <tfoot>
+                        <tr>
+                            <td>Total:</td>
+                            <td>$2,525.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Send a Message"></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Enter your coupon code" />
+                </div>
+                <button class="btn btn-theme btn-theme-dark btn-block">Apply Coupon</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="content-area" dir="ltr">
+
+    <!-- BREADCRUMBS -->
+    <section class="page-section breadcrumbs">
+        <div class="container">
+            <div class="page-header">
+                <h1>Shopping Cart</h1>
+            </div>
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li class="active">Shopping Cart</li>
+            </ul>
+        </div>
+    </section>
+    <!-- /BREADCRUMBS -->
+    <!-- PAGE -->
+    <section class="page-section color">
+        <div class="container">
+          
+          <h3 class="block-title alt" dir="ltr"><i class="fa fa-angle-down"></i>2. Orders</h3>
+    <div class="row orders" dir="ltr">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Id</th>
+                        <th>Total Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="image"><a class="media-link" href="#"><i class="fa fa-plus"></i><img width="70" height="100" src="@item.ProductIMG" alt="" /></a></td>
+                            <td class="quantity">x @item.ProductCount</td>
+                            <td class="description">
+                                <h4><a href="#"></a></h4>
+                                @item.OrderId
+                            </td>
+                            <td class="total">@item.TotalPrice </td>
+                            <td class="total">  <a class="btn btn-theme btn-theme-dark" href="~/">Details</a></td>
+                           @* <td class="total"> <a href="#"><i class="fa fa-close"></i></a></td>*@
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+            <div class="overflowed">
+                <a class="btn btn-theme btn-theme-dark" href="~/">Home Page</a>
+            </div>
+
+
+
+        </div>
+    </section>
+    <!-- /PAGE -->
+    <!-- PAGE -->
+    
+    <!-- /PAGE -->
+
+</div>
+<!-- /CONTENT AREA -->

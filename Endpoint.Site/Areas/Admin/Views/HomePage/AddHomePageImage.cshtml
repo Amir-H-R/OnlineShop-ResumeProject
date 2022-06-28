@@ -1,0 +1,45 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities.HomePage
+@{
+    ViewData["Title"] = "AddHomePageImage";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">افزودن عکس های صفحه اصلی</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form" method="post" enctype="multipart/form-data">
+
+        <div class="card-body">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="text" class="form-control" id="link" name="link" placeholder="‌لینک" />
+            </div>
+
+            <select class="dropdown" id="ImageLocation" name="ImageLocation" asp-items=" @Html.GetEnumSelectList<ImageLocation>()">
+             
+            </select>
+
+            <div class="form-group">
+                <label for="exampleInputFile"></label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <fieldset class="form-group">
+                            <label for="basicInput">تصاویر </label>
+                            <input type="file" name="File" accept="image/*">
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">ثبت</button>
+            </div>
+        </div>
+    </form>
+</div>

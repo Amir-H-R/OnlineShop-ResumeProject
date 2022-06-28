@@ -1,0 +1,19 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Application.Services.ProductServices.Queries.GetCategoryMenu
+@model List<CatMenuDto>
+@{
+    Layout = null;
+}
+   
+    @foreach (var item in Model)
+    {
+    <li class="">
+        <a href="~/product?catId=@item.Id">@item.Name</a>
+            <ul>
+                @foreach (var catItem in item.ChildCat)
+               {
+                    <li><a href="~/product?catId=@catItem.Id"> @catItem.Name</a></li>
+               }
+            </ul>
+        </li>
+    }

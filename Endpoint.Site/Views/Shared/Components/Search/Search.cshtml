@@ -1,0 +1,103 @@
+﻿@using Application.Services.ProductServices.Queries.GetCategoryMenu
+@model List<CatMenuDto>
+@{
+    Layout = null;
+}
+<head>
+    <style type="text/css">
+ 
+    #txt-search {
+        border-radius: 0 4px 4px 0;
+    }
+    
+    #btn-search {
+        padding: 4px 5px 2px;
+        left: -28px;
+        position: relative;
+        border: 0;
+        background: none;
+        z-index: 2;
+    }
+    #dropdown { width: 30px;     /* customize Select tag(DropDown options) with id="alphalist" */
+             display: inline-block;
+             background-color: #F5F5F5;
+             border-radius: 10px;
+             outline: none;
+             transition: all .5s ease;
+             position: relative;
+             vertical-align: center;
+             font-size: 15px;
+             color: black;
+             height: 30px;
+           } 
+
+ #input { border: 0;
+         background-color: #F5F5F5;
+         border-radius: 10px;
+         -webkit-appearance: none;
+         -moz-appearance: none;
+         -ms-appearance: none;
+         -o-appearance: none;
+         appearance: none;
+         text-align: left;
+         width: 100%;
+         height: 32px;        
+       }
+    </style>
+    </head>
+      <form asp-action="Index" asp-controller="Product" method="get" dir="ltr" >
+    <div style="display:flex; float:left">
+    <select class="dropdown"  id="catId" name="catId" asp-items="@(new SelectList(Model,"Id","Name"))">   
+  <option value="@null">دسته بندی ها</option>
+   </select>
+ 
+   <div class="search_bar">
+     <input class="input search_nav" type="search" name="searchKey" placeholder="جستجو..."/>       
+       <button type="submit"><i class="fa fa-search"></i></button>
+   </div>
+</div>
+</form>
+   <!-- search form -->
+@*<div class="container">
+<div class="row">    
+<div class="col-xs-6 col-xs-offset-2" >
+    <form role="search"  asp-action="Index" asp-controller="Product">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <select class="form-control" id="catId" name="catId" asp-items="@(new SelectList(Model,"Id","Name"))">
+                <option>دسته بندی ها</option>
+            </select>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+                <span id="srch-category">Category</span> <span class="caret"></span>
+            </button>
+                <ul class="dropdown-menu" id="mnu-category">
+                <li><a href="#Apps">Apps</a></li>
+                <li><a href="#eBooks">eBooks</a></li>
+                <li><a href="#Games">Games</a></li>
+                <li><a href="#Music">Music</a></li>
+                <li><a href="#Videos">Videos</a></li>
+            </ul>
+        </div>
+        <input type="hidden" id="txt-category">
+        <input type="search" id="txt-search" name="searchKey" class="form-control" placeholder="Search for...">
+        <span class="input-group-btn">
+            <button id="btn-search" type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+    </form>
+</div>
+</div>
+</div>*@
+@*
+   <form asp-action="Index" asp-controller="Product" dir="ltr" >
+<div class=" header-search ">
+      <input class="form-control" type="search" name="searchKey" placeholder="دنبال چی میگردی؟" />
+    <button type="submit"><i class="fa fa-search"></i></button>
+            <select class="form-control" id="catId" name="catId" asp-items="@(new SelectList(Model,"Id","Name"))">
+                <option>دسته بندی ها</option>
+            </select>
+</div>
+</form>
+*@

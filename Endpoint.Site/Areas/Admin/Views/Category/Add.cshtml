@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">افزودن دسته بندی</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form" method="post">
+
+        <div class="card-body">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="hidden" class="form-control" id="parentId" name="parentId" value="@ViewBag.ParentId"  >
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <input type="text" class="form-control" id="name" name="name" placeholder="نام دسته‌بندی">
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">ثبت</button>
+            </div>
+        </div>
+    </form>
+</div>

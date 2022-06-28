@@ -1,0 +1,111 @@
+﻿@using Application.Services.Commands.AddUsers;
+@model UserDto;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- PAGE -->
+<section class="page-section color">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <h3 class="block-title"><span>ورود</span></h3>
+                <form action="#" class="form-login" method="post">
+                    <div class="row">
+                        <div class="col-md-12 hello-text-wrap ">
+                            <span class="hello-text text-thin">به حساب خود خوش آمدید</span>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-theme btn-block btn-icon-left facebook" href="#"><i class="fa fa-facebook"></i>ورود با فیسبوک</a>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-theme btn-block btn-icon-left twitter" href="#"><i class="fa fa-twitter"></i>ورود با توییتر</a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span asp-validation-for="FullName" class="text-danger"> </span>
+                                <input class="form-control" id="fullname" name="fullname" type="text" placeholder="نام">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span asp-validation-for="Email" class="text-danger"> </span>
+                                <input class="form-control" id="email" name="email" type="text" placeholder="ایمیل">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span asp-validation-for="Password" class="text-danger"> </span>
+                                <input class="form-control" id="password" name="password" type="password" placeholder="پسوورد">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span asp-validation-for="RePassword" class="text-danger"> </span>
+                                <input class="form-control" id="repassword" name="repassword" type="password" placeholder="تکرار پسوورد">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"> </span>
+                                <input class="form-control" id="phonenumber" name="phonenumber" type="tel" placeholder="شماره تلفن">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="checkbox">
+                                <label><input type="checkbox">مرا بخاطر بسپار</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-theme btn-block btn-theme-dark">بت نام</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- /PAGE -->
+<!-- PAGE -->
+<section class="page-section">
+    <div class="container">
+        <div class="row blocks shop-info-banners">
+            <div class="col-md-4">
+                <div class="block">
+                    <div class="media">
+                        <div class="pull-right"><i class="fa fa-gift"></i></div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Buy 1 Get 1</h4>
+                            Proin dictum elementum velit. Fusce euismod consequat ante.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="block">
+                    <div class="media">
+                        <div class="pull-right"><i class="fa fa-comments"></i></div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Call to Free</h4>
+                            Proin dictum elementum velit. Fusce euismod consequat ante.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="block">
+                    <div class="media">
+                        <div class="pull-right"><i class="fa fa-trophy"></i></div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Money Back!</h4>
+                            Proin dictum elementum velit. Fusce euismod consequat ante.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /PAGE -->

@@ -1,0 +1,37 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Application.Services.Queries.GetUsers;
+@model GetUsersResultDto;
+@{
+    ViewData["Edit"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var id = ViewBag.UserId;
+}
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">ویرایش کاربر</h3>
+    </div>
+<form role="form" method="post">
+    <div class="card-body">
+        <div class="form-group">
+            @foreach (var item in Model.Users.Where(p => p.UserId == id))
+            {
+                <label for="exampleInputEmail1"> آی دی</label>
+                <input class="form-control" style="pointer-events:none" value="@item.UserId">
+
+                <label for="exampleInputEmail1"> ایمیل</label>
+                <input type="email" class="form-control" id="Email" name="Email" value="@item.Email">
+
+                <label for="exampleInputEmail1"> نام</label>
+                <input type="text" class="form-control" id="FullName" name="FullName" value="@item.FullName">
+
+                <label for="exampleInputEmail1"> شماره تلفن</label>
+                <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber">
+            }
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">ثبت</button>
+    </div>
+</form>
+</div>

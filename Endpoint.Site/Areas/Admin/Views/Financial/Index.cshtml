@@ -1,0 +1,70 @@
+﻿@using Application.Services.FinancialServices.Commands.RequestPayment
+@model List<PaymentRequestDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">فهرست کاربران</h3>
+                  
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body ">
+                    <table id="example2" class="table table-bordered table-hover text-md-center">
+                        <thead style="background-color:#0f83ff">
+                            <tr>
+                                <th>User Id</th>
+                                <th>Payment Id</th>
+                                <th>Price</th>
+                                <th>Is Paid</th>
+                                <th>Pay Date</th>
+                                <th>Email</th>
+                                <th>PhoneNumber</th>
+                                <th>Go to</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.UserId</td>
+                                    <td>@item.PaymentRequestId</td>
+                                    <td>@item.Amount</td>
+                                    <td>@item.IsPaid</td>
+                                    <td>@item.PayDate</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.PhoneNumber</td>
+                                    <td>
+                                        <a class="btn btn-success" href="~/admin/user/delete/@item.UserId">Order</a>
+                                        <a class="btn btn-success" href="~/admin/user/edit?UserId=@item.UserId">Detail</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        @*<tfoot style="background-color:#0f83ff">
+                            <tr>
+                               <th>User Id</th>
+                                <th>Payment Id</th>
+                                <th>Price</th>
+                                <th>Is Paid</th>
+                                <th>Pay Date</th>
+                                <th>Email</th>
+                                <th>PhoneNumber</th>
+                            </tr>
+                        </tfoot>*@
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>

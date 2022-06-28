@@ -1,0 +1,52 @@
+﻿@using Application.Services.CartServices.Queries.GetCart
+@model CartDto
+@{
+    Layout = null;
+    int totalPrice =0;
+}
+
+   <!-- Popup: Shopping cart items -->
+        <div class="modal fade popup-cart" id="popup-cart" tabindex="-1" role="dialog" aria-hidden="true" dir="ltr">
+            <div class="modal-dialog">
+                <div class="container">
+                    <div class="cart-items">
+                        <div class="cart-items-inner">
+                            @foreach (var item in Model.CartItems)
+                            {
+
+                                 <div class="media">
+                                <a class="pull-left" href="~/cart"><img class="media-object item-image" height="50" width="50" src="@item.ProductImg" alt=""></a>
+                                <p class="pull-right item-price">@item.Price.ToString("n0")</p>
+                                <div class="media-body">
+                                @{
+                                    string count = item.Count.ToString() + "x";
+                                    totalPrice += item.Price * item.Count;
+                                }
+                                    <h4 class="media-heading item-title"><a href="~/cart">@count @item.ProductName</a></h4>
+                                    @*<p class="item-desc">Lorem ipsum dolor</p>*@
+                                </div>
+                            </div>
+                            }
+                            <div class="media">
+                                <p class="pull-right item-price">@totalPrice.ToString("n0")</p>
+                                <div class="media-body">
+                                    <h4 class="media-heading item-title summary">Subtotal</h4>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-body">
+                                    <div>
+                                        <a href="#" class="btn btn-theme btn-theme-dark" data-dismiss="modal">Close</a>
+                                        <!--
+                                        -->
+                                        <a href="~/cart" class="btn btn-theme btn-theme-transparent btn-call-checkout">Go To Cart</a>
+                                        <a href="~/payment" class="btn btn-theme btn-theme-transparent btn-call-checkout">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Popup: Shopping cart items -->

@@ -1,0 +1,75 @@
+﻿@using Application.Services.ProductService.Queries.GetCategory
+@model List<CategoryDto>
+@{
+    ViewData["Categories"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- bootstrap rtl -->
+<link rel="stylesheet" href="~/Template-Admin/dist/css/bootstrap-rtl.min.css">
+<!-- Main content -->
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class=" card-header ">
+                    <h3 class="card-title "> لیست دسته بندی ها</h3>
+                
+                </div>
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                        <a class ="btn btn-primary" href="~/admin/category/add">افرودن دسته بندی</a>
+                    <table id="example2" class="table table-bordered table-hover ">
+                        <thead style="background-color:#0f83ff">
+                            <tr>
+                                <th>نام</th>
+                                <th>پدر</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+
+                                    <td>
+                                        @{
+                                            string parent = item.Parent != null ? item.Parent.Name : "-";
+                                        }
+                                        <text> @parent</text>
+                                    </td>
+                                    <td>
+                                        @if (item.Parent == null)
+                                        {
+                                            <a class="btn btn-success" href="~/admin/category/add?parentId=@item.Id">افزودن فرزند</a>
+                                        }
+                                        @if (item.HasChild == true)
+                                        {
+                                            <a class="btn btn-success" href="~/admin/category/index?parentId=@item.Id">مشاهده فرزند</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <tfoot style="background-color:#0f83ff">
+                            <tr>
+                                <th>نام</th>
+                                <th>پدر</th>
+                                <th> </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

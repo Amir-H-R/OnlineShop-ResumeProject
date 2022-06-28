@@ -1,0 +1,88 @@
+﻿@addTagHelper *,LazZiya.TagHelpers
+@using Application.Services.ProductServices.Queries.GetProductForAdmin
+@model ProductListDto
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">فهرست محصولات</h3>
+
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body ">
+                    <table id="example2" class="table table-bordered table-hover text-md-center">
+                        <a class="btn btn-primary " href="~/admin/product/add">افرودن کالا</a>
+                        <thead style="background-color:#0f83ff">
+                            <tr>
+                                <th>نام</th>
+                                <th>دسته بندی </th>
+                                <th>برند</th>
+                                <th>قیمت</th>
+                                <th>موجودی </th>
+                                <th>نمایش داده شود؟</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.Brand</td>
+                                    <td>@item.Price.ToString("n0")</td>
+                                    <td>@item.Inventory</td>
+                                    @{
+                                        string isDisplayed = @item.IsDisplayed == true ? " بله" :"خیر" ;
+                                    }
+                                    <td>@isDisplayed</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="~/admin/product/delete?productid=@item.Id">حذف</a>
+                                        <a class="btn btn-info" href="~/admin/product/detail?id=@item.Id">جزئیات </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        @* <tfoot style="background-color:#0f83ff">
+                            <tr>
+                            <th>آی دی</th>
+                            <th>نقش کاربر</th>
+                            <th>نام</th>
+                            <th>ایمیل</th>
+                            <th>شماره تلفن</th>
+                            <th> </th>
+                            </tr>
+                        </tfoot>*@
+                    </table>
+                </div>
+                  <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize">
+            </paging>
+        </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          
+        </div>
+        <!-- /.col -->
+        
+    </div>
+    <!-- /.row -->
+
+</section>
