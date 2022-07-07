@@ -5,7 +5,7 @@ namespace Endpoint.Site.Models.ViewModel.HomePage
 {
     public class HomePageViewModel
     {
-        public List<HomeSliderDto> HomeSliders { get; set; }
-        public List<SiteImagesDto> SiteImagesDto { get; set; }
+        public List<SliderDto> HomeSliders { get; set; }
+        public List<HomePageImageDto> SiteImagesDto { get; set; }
     }
 }

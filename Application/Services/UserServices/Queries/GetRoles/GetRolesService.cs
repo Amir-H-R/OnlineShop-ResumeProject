@@ -28,7 +28,7 @@ namespace Application.Services.Queries.GetRoles
             {
                 Data = res,
                 IsSuccess = true,
-                Message = ""
+                Message = "Roles Received"
             };
         }
     }

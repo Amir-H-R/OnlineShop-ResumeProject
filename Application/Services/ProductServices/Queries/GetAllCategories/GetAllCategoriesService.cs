@@ -7,14 +7,14 @@
         {
             _context = context;
         }
-        public ResultDto<List<AllCategoriesDto>> Execute()
+        public ResultDto<List<CategoryDto>> Execute()
         {
             var categories = _context.Categories
              .Include(p => p.ParentCategory)
                 .Where(p => p.ParentCategoryId != null).ToList()
-                .Select(p => new AllCategoriesDto { Id = p.Id, Name = $"{p.ParentCategory.Name} - {p.Name}" }).ToList();
+                .Select(p => new CategoryDto { Id = p.Id, Name = $"{p.ParentCategory.Name} - {p.Name}" }).ToList();
 
-            return new ResultDto<List<AllCategoriesDto>>()
+            return new ResultDto<List<CategoryDto>>()
             {
                 Data = categories,
                 IsSuccess = true,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Services.HomePageServices.Commands.AddSlider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Application.Services.HomePageServices.Queries.GetSliderForSite
 {
     public interface IGetSliderForSiteService
     {
-        ResultDto<List<HomeSliderDto>> Execute();
+        ResultDto<List<SliderDto>> Execute();
     }
 
     public class GetSliderForSiteService : IGetSliderForSiteService
@@ -19,25 +20,19 @@ namespace Application.Services.HomePageServices.Queries.GetSliderForSite
             _context = context;
         }
 
-        public ResultDto<List<HomeSliderDto>> Execute()
+        public ResultDto<List<SliderDto>> Execute()
         {
-            var sliders = _context.Sliders.ToList().Select(p => new HomeSliderDto
+            var sliders = _context.Sliders.ToList().Select(p => new SliderDto
             {
                 Link = p.Link,
                 Src = p.Src
             }).ToList();
-            return new ResultDto<List<HomeSliderDto>>
+            return new ResultDto<List<SliderDto>>
             {
                 Data = sliders,
                 IsSuccess = true,
                 Message = "success"
             };
         }
-    }
-
-    public class HomeSliderDto
-    {
-        public string Src { get; set; }
-        public string Link { get; set; }
     }
 }
