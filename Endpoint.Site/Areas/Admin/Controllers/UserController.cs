@@ -41,9 +41,9 @@ namespace Endpoint.Site.Areas.Admin.Controllers
         public IActionResult Create(UserDto userDto, long RoleId)
         {
             ViewBag.Roles = new SelectList(_facade.GetRoles.Execute().Data, "Id", "Name");
+
             ValidationResult result = _validations.Validate(userDto);
             ViewBag.Validation = result;
-
             if (!result.IsValid)
             {
                 ViewBag.Roles = new SelectList(_facade.GetRoles.Execute().Data, "Id", "Name");

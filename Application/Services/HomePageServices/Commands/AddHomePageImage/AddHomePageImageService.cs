@@ -27,7 +27,7 @@ namespace Application.Services.HomePageServices.Commands.AddHomePageImage
 
         public ResultDto Execute(HomePageImageDto homeDto)
         {
-            var uploadResult = UploadFile(homeDto.file);
+            var uploadResult = UploadFile(homeDto.File);
             HomePageImage homePage = new HomePageImage()
             {
                 Link = homeDto.Link,
@@ -67,13 +67,11 @@ namespace Application.Services.HomePageServices.Commands.AddHomePageImage
                     Status = true
                 };
             }
-            return null;
+            else
+            {
+                return null;
+            }
+
         }
-    }
-    public class HomePageImageDto
-    {
-        public IFormFile file { get; set; }
-        public string Link { get; set; }
-        public ImageLocation ImageLocation { get; set; }
     }
 }

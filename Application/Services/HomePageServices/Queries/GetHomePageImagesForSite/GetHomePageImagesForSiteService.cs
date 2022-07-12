@@ -1,4 +1,5 @@
-﻿using Domain.Entities.HomePage;
+﻿using Application.Services.HomePageServices.Commands.AddHomePageImage;
+using Domain.Entities.HomePage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Application.Services.HomePageServices.Queries.GetHomePageImagesForSite
 {
     public interface IGetHomePageImagesForSiteService
     {
-        ResultDto<List<SiteImagesDto>> Execute();
+        ResultDto<List<HomePageImageDto>> Execute();
     }
     public class GetHomePageImagesForSiteService : IGetHomePageImagesForSiteService
     {
@@ -19,16 +20,16 @@ namespace Application.Services.HomePageServices.Queries.GetHomePageImagesForSite
             _context = context;
         }
 
-        public ResultDto<List<SiteImagesDto>> Execute()
+        public ResultDto<List<HomePageImageDto>> Execute()
         {
-            var imgs = _context.HomePageImages.ToList().OrderByDescending(p => p.Id).Select(p => new SiteImagesDto
+            var imgs = _context.HomePageImages.ToList().OrderByDescending(p => p.Id).Select(p => new HomePageImageDto
             {
                 ImageLocation = p.ImageLocation,
                 Link = p.Link,
                 Src = p.Src
             }).ToList();
 
-            return new ResultDto<List<SiteImagesDto>>
+            return new ResultDto<List<HomePageImageDto>>
             {
                 Data = imgs,
                 IsSuccess = true,
@@ -36,11 +37,4 @@ namespace Application.Services.HomePageServices.Queries.GetHomePageImagesForSite
             };
         }
     }
-    public class SiteImagesDto
-    {
-        public string Src { get; set; }
-        public string Link { get; set; }
-        public ImageLocation ImageLocation { get; set; }
-    }
-
 }

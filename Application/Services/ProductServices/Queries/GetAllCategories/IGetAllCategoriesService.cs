@@ -9,6 +9,6 @@ namespace Application.Services.ProductServices.Queries.GetAllCategories
 {
     public interface IGetAllCategoriesService
     {
-        ResultDto<List<AllCategoriesDto>> Execute();
+        ResultDto<List<CategoryDto>> Execute();
     }
 }

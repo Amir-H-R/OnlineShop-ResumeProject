@@ -92,13 +92,12 @@ namespace Endpoint.Site.Controllers
             if (user.IsSuccess == true)
             {
                 var claims = new List<Claim>()
-            {
-               new Claim(ClaimTypes.NameIdentifier,user.Data.UserId.ToString()),
-               new Claim(ClaimTypes.Name,user.Data.Name),
+                {
+                    new Claim(ClaimTypes.NameIdentifier,user.Data.UserId.ToString()),
+                    new Claim(ClaimTypes.Name,user.Data.Name),
 
-               new Claim(ClaimTypes.Email,user.Data.Email)
-            };
-
+                    new Claim(ClaimTypes.Email,user.Data.Email)
+                };
                 foreach (var item in user.Data.Role)
                 {
                     claims.Add(new Claim(ClaimTypes.Role, item));

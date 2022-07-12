@@ -66,13 +66,11 @@ namespace Application.Services.HomePageServices.Commands.AddSlider
                     Status = true
                 };
             }
-            return null;
-        }
-    }
+            else
+            {
+                return null;
+            }
 
-    public class SliderDto
-    {
-        public string Link { get; set; }
-        public IFormFile File { get; set; }
+        }
     }
 }
