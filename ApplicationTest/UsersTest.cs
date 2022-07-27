@@ -14,6 +14,8 @@ using Persistence.Context;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UserTestingData;
 using Xunit;
 using Xunit.Sdk;
 
@@ -21,17 +23,12 @@ namespace ApplicationTest
 {
     public class UsersTest
     {
-        // private DatabaseContext context;
-
-        [Fact]
-        public void GetUsers()
+        [Theory]
+        [MemberData(nameof(UserData.GetUsers), MemberType = typeof(UserData))]
+        public void GetUsers(List<UserDto> users)
         {
             //Arrange
-            List<GetUsersDto> getUsers = new List<GetUsersDto>()
-            {
-                 new GetUsersDto{Email = "xxx",FullName = "Amir",PhoneNumber = 09379509487,UserRole = "Admin" }
-            };
-            GetUsersResultDto usersResult = new GetUsersResultDto() { Users = getUsers, };
+            GetUsersResultDto usersResult = new GetUsersResultDto() { Users = users };
             GetUsersRequestsDto usersRequest = new GetUsersRequestsDto() { Page = 20, SearchKey = "" };
 
             var moq = new Mock<IGetUsersService>();
@@ -42,7 +39,7 @@ namespace ApplicationTest
 
             //Assert
             Assert.IsType<GetUsersResultDto>(result);
-            Assert.IsAssignableFrom<List<GetUsersDto>>(result.Users);
+            Assert.IsAssignableFrom<List<UserDto>>(result.Users);
             Assert.NotEmpty(result.Users);
             Assert.NotNull(result.Users);
         }
@@ -51,25 +48,20 @@ namespace ApplicationTest
         public void GetRoles()
         {
             //Arrange
-            //  context = new DatabaseBuilder().SqlDatabase();
-            //GetRolesService getRoles = new GetRolesService(context);
 
-            List<Application.Services.Queries.GetRoles.RoleDto> roles = new List<Application.Services.Queries.GetRoles.RoleDto>()
-            {
-                new Application.Services.Queries.GetRoles.RoleDto{Name= "Admin"},
-                new Application.Services.Queries.GetRoles.RoleDto{Name = "Operator"},
-                new Application.Services.Queries.GetRoles.RoleDto{Name = "Customer"},
-            };
-            ResultDto<List<Application.Services.Queries.GetRoles.RoleDto>> data = new ResultDto<List<Application.Services.Queries.GetRoles.RoleDto>>() { Data = roles };
+            List<RoleDto> roles = new List<RoleDto>();
+            roles = UserData.GetRoles();
+        
+            ResultDto<List<RoleDto>> data = new ResultDto<List<RoleDto>>() { Data = roles };
             var moq = new Mock<IGetRolesService>();
+
             moq.Setup(p => p.Execute()).Returns(data);
 
             //Act
-            //var result = getRoles.Execute();
             var result = moq.Object.Execute();
 
             //Assert
-            Assert.IsType<ResultDto<List<Application.Services.Queries.GetRoles.RoleDto>>>(result);
+            Assert.IsType<ResultDto<List<RoleDto>>>(result);
             Assert.NotNull(result.Data);
         }
 
@@ -92,11 +84,29 @@ namespace ApplicationTest
             Assert.NotNull(result.Data);
             Assert.NotEmpty(result.Data.UserRoles);
         }
-        public void RemoveUser()
+
+        [Theory]
+        [MemberData(nameof(UserData.GetUsers), MemberType = typeof(UserData))]
+        public void RemoveUser(List<UserDto> users)
         {
             //Arrange
+            DatabaseContext context = new DatabaseBuilder().InMemoryDatabase();
+
+            foreach (var item in UserData.GetRoles())
+            {
+                context.Roles.Add(new Role { Name = item.Name, RoleId = item.Id });
+            }
+            context.SaveChanges();
+
             //Act
+            AddUserService addUser = new AddUserService(context);
+            addUser.Execute(users.First());
+
+            RemoveUserService removeUser = new RemoveUserService(context);
+            var result = removeUser.Execute(1);
+
             //Assert
+            Assert.True(result.IsSuccess,"Something's wrong");
         }
 
     }
