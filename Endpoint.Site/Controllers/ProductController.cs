@@ -21,6 +21,7 @@ namespace Endpoint.Site.Controllers
             return View(products);
         }
 
+        [HttpGet("[Controller]/[Action]/{id}/{name}")]
         public IActionResult Detail(long Id)
         {
             var product = _facade.GetProductDetailForSite.Execute(Id,_cookieManager.GetBrowserId(HttpContext)).Data;
