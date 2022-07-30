@@ -1,6 +1,6 @@
 ﻿using Application.Interface.Context;
 using Application.Services.ProductService.Common;
-using Application.Services.ProductServices.Commands.AddProduct;
+using Application.Services.ProductServices.Common;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

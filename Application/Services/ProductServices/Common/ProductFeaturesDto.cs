@@ -1,4 +1,4 @@
-﻿namespace Application.Services.ProductServices.Commands.AddProduct
+﻿namespace Application.Services.ProductServices.Common
 {
     public class ProductFeaturesDto
     {

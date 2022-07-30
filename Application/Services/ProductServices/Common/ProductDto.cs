@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Application.Services.ProductServices.Commands.AddProduct
+namespace Application.Services.ProductServices.Common
 {
     public class ProductDto
     {

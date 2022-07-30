@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Products;
+﻿using Application.Services.ProductServices.Common;
+using Domain.Entities.Products;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -24,6 +25,8 @@ namespace Application.Services.ProductServices.Commands.AddProduct
         {
             try
             {
+                var productName = request.Name.Replace(' ', '-');
+
                 Product product = new Product()
                 {
                     Brand = request.Brand,

@@ -1,4 +1,5 @@
 ﻿using Application.Services.ProductServices.Commands.AddProduct;
+using Application.Services.ProductServices.Common;
 using AutoMapper;
 using Domain.Entities.Products;
 using System;

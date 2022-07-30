@@ -1,4 +1,4 @@
-﻿using Application.Services.ProductServices.Commands.AddProduct;
+﻿using Application.Services.ProductServices.Common;
 
 namespace Application.Services.ProductServices.Queries.GetProductDetailForSite
 {
