@@ -18,7 +18,6 @@ using Application.Services.FinancialServices.Common;
 using Endpoint.Site.Utilities;
 using Common;
 using Application.Services.OrderServices.Common;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,10 +42,8 @@ builder.Services.AddAuthentication(options =>
     options.ExpireTimeSpan = TimeSpan.FromDays(5);
 });
 
+//Facade(s) and services Injection
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
-
-//Services
 builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 builder.Services.AddScoped<Endpoint.Site.Utilities.ICookieManager, CookieManager>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
@@ -55,8 +52,6 @@ builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
 builder.Services.AddScoped<ICartFacade, CartFacade>();
 builder.Services.AddScoped<IFinancialFacade, FinancialFacade>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
-
-//Validations
 builder.Services.AddScoped<IValidator<UserDto>, UserValidator>();
 builder.Services.AddScoped<IValidator<LoginDto>, LoginValidator>();
 builder.Services.AddControllersWithViews().AddFluentValidation(p =>
@@ -72,7 +67,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopIdentityDb")));
+builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopDb")));
 
 var app = builder.Build();
 //Middlewares

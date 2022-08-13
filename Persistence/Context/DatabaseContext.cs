@@ -6,8 +6,6 @@ using Domain.Entities.HomePage;
 using Domain.Entities.Orders;
 using Domain.Entities.Products;
 using Domain.Entities.Users_n_Roles;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,23 +19,23 @@ namespace Persistence.Context
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
-
+            
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductFeature> ProductFeatures { get; set; }
-        public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<Slider> Sliders { get; set; }
-        public DbSet<HomePageImage> HomePageImages { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<PaymentRequest> PaymentRequests { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Category> Categories{ get; set; }
+        public DbSet<Product> Products{ get; set; }
+        public DbSet<ProductFeature> ProductFeatures{ get; set; }
+        public DbSet<ProductImage> ProductImages{ get; set; }
+        public DbSet<Slider> Sliders{ get; set; }
+        public DbSet<HomePageImage> HomePageImages{ get; set; }
+        public DbSet<Cart> Carts{ get; set; }
+        public DbSet<CartItem> CartItems{ get; set; }
+        public DbSet<PaymentRequest>  PaymentRequests{ get; set; }
+        public DbSet<Order>  Orders { get; set; }
+        public DbSet<OrderDetail>  OrderDetails{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +44,7 @@ namespace Persistence.Context
             //یکتا بودن ایمیل
             modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
 
-            //modelBuilder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Order>().HasOne(p => p.PaymentRequest).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ProductImage>().HasOne(p => p.Product).WithMany(p => p.ProductImages);
 
@@ -63,7 +61,7 @@ namespace Persistence.Context
 
         protected void ApplyQueryFilter(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);  
             modelBuilder.Entity<Role>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<UserRoles>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Category>().HasQueryFilter(p => !p.IsRemoved);
@@ -80,83 +78,12 @@ namespace Persistence.Context
         }
 
         protected void SeedData(ModelBuilder modelBuilder)
-        {
+        {   
             //نقش های پیشفرض انتیتی رول
             modelBuilder.Entity<Role>().HasData(new Role { RoleId = 1, Name = nameof(UserDefaultRoles.Admin), IsRemoved = false, CreateDate = DateTime.Now });
             modelBuilder.Entity<Role>().HasData(new Role { RoleId = 2, Name = nameof(UserDefaultRoles.Operator), IsRemoved = false, CreateDate = DateTime.Now });
             modelBuilder.Entity<Role>().HasData(new Role { RoleId = 3, Name = nameof(UserDefaultRoles.Customer), IsRemoved = false, CreateDate = DateTime.Now });
 
-        }
-
-        public class IdentityDatabaseContext : IdentityDbContext<User, IdentityRole,string>
-        {
-            public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : base(options)
-            {
-
-            }
-            public DbSet<User> Users { get; set; }
-            public DbSet<Role> Roles { get; set; }
-            public DbSet<UserRoles> UserRoles { get; set; }
-            public DbSet<Category> Categories { get; set; }
-            public DbSet<Product> Products { get; set; }
-            public DbSet<ProductFeature> ProductFeatures { get; set; }
-            public DbSet<ProductImage> ProductImages { get; set; }
-            public DbSet<Slider> Sliders { get; set; }
-            public DbSet<HomePageImage> HomePageImages { get; set; }
-            public DbSet<Cart> Carts { get; set; }
-            public DbSet<CartItem> CartItems { get; set; }
-            public DbSet<PaymentRequest> PaymentRequests { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<OrderDetail> OrderDetails { get; set; }
-
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                SeedData(modelBuilder);
-                ApplyQueryFilter(modelBuilder);
-                //یکتا بودن ایمیل
-                modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
-
-                //modelBuilder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
-                modelBuilder.Entity<Order>().HasOne(p => p.PaymentRequest).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
-                modelBuilder.Entity<ProductImage>().HasOne(p => p.Product).WithMany(p => p.ProductImages);
-
-                //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-                //{
-                //    if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute_Ins), true).Length > 0)
-                //    {
-                //        modelBuilder.Entity(entityType.Name).Property<int>("InsUserId");
-                //        modelBuilder.Entity(entityType.Name).Property<DateTime>("InsertTime").HasDefaultValueSql("getDate()");
-                //        modelBuilder.Entity<ProductImage>().HasOne(p => p.Product).WithMany(p => p.ProductImages);
-                //    }
-                //}
-            }
-
-            protected void ApplyQueryFilter(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Role>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<UserRoles>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Category>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<ProductFeature>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<ProductImage>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Slider>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<HomePageImage>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Cart>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<CartItem>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<PaymentRequest>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<Order>().HasQueryFilter(p => !p.IsRemoved);
-                modelBuilder.Entity<OrderDetail>().HasQueryFilter(p => !p.IsRemoved);
-            }
-
-            protected void SeedData(ModelBuilder modelBuilder)
-            {
-                //نقش های پیشفرض انتیتی رول
-                modelBuilder.Entity<Role>().HasData(new IdentityRole { Id = 1, Name = nameof(UserDefaultRoles.Admin), IsRemoved = false, CreateDate = DateTime.Now });
-                modelBuilder.Entity<Role>().HasData(new Role { RoleId = 2, Name = nameof(UserDefaultRoles.Operator), IsRemoved = false, CreateDate = DateTime.Now });
-                modelBuilder.Entity<Role>().HasData(new Role { RoleId = 3, Name = nameof(UserDefaultRoles.Customer), IsRemoved = false, CreateDate = DateTime.Now });
-
-            }
         }
     }
 }
