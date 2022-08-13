@@ -22,13 +22,12 @@ namespace Application.Services.Commands.AddUsers
                 Email = request.Email,
                 FullName = request.FullName,
                 PhoneNumber = request.PhoneNumber,
-                Password = hashedPassword,     
+                Password = hashedPassword,
                 IsActive = true,
             };
             List<UserRoles> userRoles = new List<UserRoles>();
             foreach (var item in request.Roles)
             {
-              
                 var role = _context.Roles.Find(item.Id);
                 userRoles.Add(new UserRoles
                 {
@@ -36,7 +35,7 @@ namespace Application.Services.Commands.AddUsers
                     RoleId = role.RoleId,
                     User = user,
                     UserId = (user.UserId)
-                }) ;
+                });
             }
             user.UserRoles = userRoles;
             _context.Users.Add(user);
@@ -45,6 +44,7 @@ namespace Application.Services.Commands.AddUsers
             {
                 Data = new UsersRegistrationResult()
                 {
+                    UserRoles = userRoles,
                     UserId = user.UserId
                 },
                 IsSuccess = true,
