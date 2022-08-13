@@ -22,8 +22,8 @@ namespace Application.Services.Commands.AddUsers
                 Email = request.Email,
                 FullName = request.FullName,
                 PhoneNumber = request.PhoneNumber,
-                Password = hashedPassword,
-                IsActive = true,
+                PasswordHash = hashedPassword,
+                LockoutEnabled = false,
             };
             List<UserRoles> userRoles = new List<UserRoles>();
             foreach (var item in request.Roles)
@@ -32,9 +32,9 @@ namespace Application.Services.Commands.AddUsers
                 userRoles.Add(new UserRoles
                 {
                     Role = role,
-                    RoleId = role.RoleId,
+                    RoleId = role.Id,
                     User = user,
-                    UserId = (user.UserId)
+                    UserId = (user.Id)
                 });
             }
             user.UserRoles = userRoles;
@@ -45,7 +45,7 @@ namespace Application.Services.Commands.AddUsers
                 Data = new UsersRegistrationResult()
                 {
                     UserRoles = userRoles,
-                    UserId = user.UserId
+                    UserId = user.Id
                 },
                 IsSuccess = true,
                 Message = "کاربر با موفقیت ثبت شد"

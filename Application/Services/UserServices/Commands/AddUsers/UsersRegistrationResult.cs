@@ -2,7 +2,7 @@
 
 public class UsersRegistrationResult
 {
-    public long UserId;
+    public string UserId;
     public List<UserRoles> UserRoles;
 }
 

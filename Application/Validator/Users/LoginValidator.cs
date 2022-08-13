@@ -38,7 +38,7 @@ namespace Application.Validator.Users
             var user = _context.Users.ToList();
             foreach (var item in user)
             {
-              var pass =   hasher.VerifyPassword(item.Password, password);
+              var pass =   hasher.VerifyPassword(item.PasswordHash, password);
                 if (pass != false)
                 {
                     return true;

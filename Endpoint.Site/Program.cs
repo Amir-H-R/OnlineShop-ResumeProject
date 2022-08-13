@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Application.Interface.Context;
 using Application.Services.ProductService.Common;
 using Application.Services.Common.UsersFacade;
@@ -7,7 +8,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 using AutoMapper;
 using Persistence.Context;
 using System;
@@ -67,7 +69,8 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopDb")));
+//builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopDb")));
+builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopIdentityDb")));
 
 var app = builder.Build();
 //Middlewares

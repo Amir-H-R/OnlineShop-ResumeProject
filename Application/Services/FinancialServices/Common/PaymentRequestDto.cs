@@ -4,7 +4,7 @@
     {
         public Guid Guid { get; set; }
         public int Amount { get; set; }
-        public long? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public string Email { get; set; }
         public long UserId { get; set; }
         public bool IsPaid { get; set; }

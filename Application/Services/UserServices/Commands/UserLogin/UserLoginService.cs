@@ -22,7 +22,7 @@ namespace Application.Services.UserService.Commands.UserLogin
         {
             PasswordHasher hasher = new PasswordHasher();
             var user = _context.Users.Include(p => p.UserRoles).ThenInclude(p => p.Role).Where(p => p.Email == dto.Email).FirstOrDefault();
-            var password = hasher.VerifyPassword(user.Password, dto.Password);
+            var password = hasher.VerifyPassword(user.PasswordHash, dto.Password);
             if (password == true)
             {
              
@@ -35,7 +35,7 @@ namespace Application.Services.UserService.Commands.UserLogin
                 LoginResultDto resultDto = new LoginResultDto()
                 {
                     Name = user.FullName,
-                    UserId = user.UserId,
+                    UserId = user.Id,
                     Email = user.Email,
                     Role = roles,
                 };

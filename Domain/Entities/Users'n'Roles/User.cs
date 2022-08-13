@@ -12,7 +12,7 @@ namespace Domain.Entities.Users_n_Roles
     public class User : IdentityUser
     {
         //public long UserId { get; set; }
-        //public string FullName { get; set; }
+        public string FullName { get; set; }
         //public string Email { get; set; }
         //public long? PhoneNumber { get; set; }
         //public string Password { get; set; }

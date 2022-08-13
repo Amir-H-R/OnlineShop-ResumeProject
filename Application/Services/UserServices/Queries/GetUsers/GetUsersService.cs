@@ -29,8 +29,8 @@ namespace Application.Services.Queries.GetUsers
             {
                 Email = p.Email,
                 FullName = p.FullName,
-                PhoneNumber = p.PhoneNumber.Value,
-                UserId = p.UserId,
+                PhoneNumber = p.PhoneNumber,
+                UserId = p.Id,
                 Roles = p.UserRoles.ToList().Select(i=> new RoleDto { Name = i.Role.Name}).ToList()
             }).ToList();
 

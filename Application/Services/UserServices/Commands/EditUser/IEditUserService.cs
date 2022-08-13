@@ -9,7 +9,7 @@ namespace Application.Services.UserServices.Commands.EditUser
 {
     public interface IEditUserService
     {
-        ResultDto Execute(UserDto dto, long Id);
+        ResultDto Execute(UserDto dto, string Id);
     }
 
 }

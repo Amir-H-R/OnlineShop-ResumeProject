@@ -11,14 +11,14 @@ namespace Application.Services.UserServices.Commands.EditUser
             _context = context;
         }
 
-        public ResultDto Execute(UserDto dto, long Id)
+        public ResultDto Execute(UserDto dto, string Id)
         {
-            var user = _context.Users.Where(p => p.UserId == Id).FirstOrDefault();
+            var user = _context.Users.Where(p => p.Id == Id).FirstOrDefault();
             user.Email = dto.Email;
             user.FullName = dto.FullName;
             user.PhoneNumber = dto.PhoneNumber;
             //user.UserRoles
-            if (user.IsActive == true)
+            if (user.LockoutEnabled != true)
             {
                 _context.SaveChanges();
                 return new ResultDto

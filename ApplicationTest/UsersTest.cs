@@ -72,12 +72,12 @@ namespace ApplicationTest
             DatabaseContext context = new DatabaseBuilder().InMemoryDatabase();
             AddUserService addUser = new AddUserService(context);
 
-            Role role = new Role() { RoleId = 4, Name = "LoL" };
+            Role role = new Role() { Id = Guid.NewGuid().ToString(), Name = "LoL" };
             context.Roles.Add(role);
             context.SaveChanges();
 
             //Act
-            var result = addUser.Execute(new UserDto { Email = "Amir.h.rouh@lol.com", FullName = "Amir", Password = "ArchangelArchangel", RePassword = "ArchangelArchangel", PhoneNumber = 09901913485, Roles = new List<RoleDto> { new RoleDto { Id = 4 } } });
+            var result = addUser.Execute(new UserDto { Email = "Amir.h.rouh@lol.com", FullName = "Amir", Password = "ArchangelArchangel", RePassword = "ArchangelArchangel", PhoneNumber = "09901913485", Roles = new List<RoleDto> { new RoleDto { Id = Guid.NewGuid().ToString() } } });
 
             //Assert
             Assert.IsType<ResultDto<UsersRegistrationResult>>(result);
@@ -94,7 +94,7 @@ namespace ApplicationTest
 
             foreach (var item in UserData.GetRoles())
             {
-                context.Roles.Add(new Role { Name = item.Name, RoleId = item.Id });
+                context.Roles.Add(new Role { Name = item.Name, Id = item.Id });
             }
             context.SaveChanges();
 

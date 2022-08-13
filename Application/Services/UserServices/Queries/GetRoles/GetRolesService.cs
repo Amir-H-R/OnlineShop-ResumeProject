@@ -21,7 +21,7 @@ namespace Application.Services.Queries.GetRoles
         {
             var res = _context.Roles.ToList().Select(p => new RoleDto
             {
-                Id = p.RoleId,
+                Id = p.Id,
                 Name = p.Name,
             }).ToList();
             return new ResultDto<List<RoleDto>>

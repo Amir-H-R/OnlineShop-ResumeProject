@@ -46,7 +46,7 @@ namespace Application.Validator.Users
             }
         }
 
-        private bool PhonenumberValidator(long phonenumber)
+        private bool PhonenumberValidator(string phonenumber)
         {
             //UserDto user = new UserDto();
             // email = user.Email;
