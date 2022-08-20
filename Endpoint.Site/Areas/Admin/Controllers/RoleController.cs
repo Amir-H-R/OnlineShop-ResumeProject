@@ -26,16 +26,10 @@ namespace Endpoint.Site.Areas.Admin.Controllers
             return View(roles);
         }
 
-        
-        public IActionResult Create()
-        {
-            return View();
-        }
         [HttpPost]
         public IActionResult Create(RoleDto roleDto)
         {
           var result =  _userFacade.AddRole.Execute(roleDto);
-            return Json(result);
             if (result.IsSuccess == true)
             {
                 return Json(result);

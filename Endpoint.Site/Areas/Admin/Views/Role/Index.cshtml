@@ -50,7 +50,7 @@
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script>
-        function Edituser() {
+        function AddRole() {
 
             var roleName = $("#Add_Role").val();
            
@@ -88,7 +88,7 @@
                 }
             });
 
-            $('#EditUser').modal('hide');
+            $('#AddRole').modal('hide');
 
         }
 
@@ -96,7 +96,7 @@
         function ShowAddRoleModal() {
             
 
-            $('#EditUser').modal('show');
+            $('#AddRole').modal('show');
         }
 
     </script>
@@ -106,7 +106,7 @@
     @section Modals
     {
     <!-- Modal Edit User -->
-    <div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="AddRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -125,7 +125,7 @@
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                    <a class="btn btn-primary" onclick="Edituser()">Confirm</a>
+                    <a class="btn btn-primary" onclick="AddRole()">Confirm</a>
                 </div>
             </div>
         </div>
