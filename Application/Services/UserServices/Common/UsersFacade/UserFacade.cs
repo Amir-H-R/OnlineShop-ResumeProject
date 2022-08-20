@@ -5,6 +5,7 @@ using Application.Services.Queries.GetRoles;
 using Application.Services.Queries.GetUsers;
 using Application.Services.UserService.Commands.UserLogin;
 using Application.Services.UserServices.Commands.AddRole;
+using Application.Services.UserServices.Commands.ConfirmEmail;
 using Application.Services.UserServices.Commands.EditUser;
 using Domain.Entities.Users_n_Roles;
 using Microsoft.AspNetCore.Identity;
@@ -68,7 +69,7 @@ namespace Application.Services.Common.UsersFacade
         {
             get
             {
-                return _addUser = _addUser ?? new AddIdentityUser(_userManager,_roleManager);
+                return _addUser = _addUser ?? new AddIdentityUser(_userManager, _roleManager);
             }
         }
 
@@ -96,6 +97,14 @@ namespace Application.Services.Common.UsersFacade
             get
             {
                 return _addRole ?? new AddRoleService(_roleManager);
+            }
+        }
+        private ConfirmEmailService _confirmEmail;
+        public ConfirmEmailService ConfirmEmail
+        {
+            get
+            {
+                return _confirmEmail ?? new ConfirmEmailService(_userManager);
             }
         }
 

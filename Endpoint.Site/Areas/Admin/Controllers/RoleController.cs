@@ -30,14 +30,7 @@ namespace Endpoint.Site.Areas.Admin.Controllers
         public IActionResult Create(RoleDto roleDto)
         {
           var result =  _userFacade.AddRole.Execute(roleDto);
-            if (result.IsSuccess == true)
-            {
                 return Json(result);
-            }
-            else
-            {
-                return BadRequest();
-            }
         }
     }
 }

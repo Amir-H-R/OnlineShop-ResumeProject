@@ -4,6 +4,7 @@ using Application.Services.Queries.GetRoles;
 using Application.Services.Queries.GetUsers;
 using Application.Services.UserService.Commands.UserLogin;
 using Application.Services.UserServices.Commands.AddRole;
+using Application.Services.UserServices.Commands.ConfirmEmail;
 using Application.Services.UserServices.Commands.EditUser;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,6 @@ namespace Application.Services.Common.UsersFacade
         RemoveUserService RemoveUser { get; }
         EditUserService EditUser { get; }
         AddRoleService AddRole { get; }
+        ConfirmEmailService ConfirmEmail { get; }
     }
 }

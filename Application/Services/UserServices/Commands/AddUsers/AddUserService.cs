@@ -77,18 +77,18 @@ public class AddIdentityUser : IAddUserService
                 PhoneNumber = userdto.PhoneNumber,
                 UserName = userdto.Email,
             };
-            var result = _userManager.CreateAsync(user, userdto.Password).Result;
+            var userResult = _userManager.CreateAsync(user, userdto.Password).Result;
 
-            var user1 = _userManager.FindByEmailAsync(user.Email).Result;
             var role = _roleManager.FindByIdAsync(userdto.Roles.FirstOrDefault().Id).Result;
             var roleResult = _userManager.AddToRoleAsync(user, role.Name).Result;
-            if (result.Succeeded && roleResult.Succeeded)
+            if (userResult.Succeeded && roleResult.Succeeded)
             {
+                //Return Data
                 List<UserRoles> userRoles = new List<UserRoles>()
                 {
                     new UserRoles
                     {
-                        Role = role,
+                    Role = role,
                     RoleId = role.Id,
                     User = user,
                     UserId = (user.Id)
@@ -107,6 +107,8 @@ public class AddIdentityUser : IAddUserService
             }
             else
             {
+                _userManager.DeleteAsync(user);
+                _userManager.RemoveFromRoleAsync(user, role.Name);
                 throw new Exception();
             }
         }

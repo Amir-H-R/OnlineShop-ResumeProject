@@ -20,6 +20,7 @@ using Application.Services.FinancialServices.Common;
 using Endpoint.Site.Utilities;
 using Common;
 using Application.Services.OrderServices.Common;
+using Application.Services.MailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,7 @@ builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
 builder.Services.AddScoped<ICartFacade, CartFacade>();
 builder.Services.AddScoped<IFinancialFacade, FinancialFacade>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
+builder.Services.AddScoped<IMailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IValidator<UserDto>, UserValidator>();
 builder.Services.AddScoped<IValidator<LoginDto>, LoginValidator>();
 builder.Services.AddControllersWithViews().AddFluentValidation(p =>

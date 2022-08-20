@@ -1,10 +1,13 @@
 ﻿using Application.Interface.Context;
 using Application.Services.Common.UsersFacade;
+using Application.Services.MailSender;
 using Common;
+using Domain.Entities.Users_n_Roles;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
@@ -16,11 +19,17 @@ namespace Endpoint.Site.Controllers
         private readonly IUserFacade _facade;
         private readonly IValidator<UserDto> _userValidator;
         private readonly IValidator<LoginDto> _loginValidator;
-        public AuthenticationController(IUserFacade facade, IValidator<UserDto> userValidator, IValidator<LoginDto> loginValidator)
+        private readonly IMailSenderService _mailSender;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        public AuthenticationController(IUserFacade facade, IValidator<UserDto> userValidator, IValidator<LoginDto> loginValidator, IMailSenderService mailSender, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _loginValidator = loginValidator;
             _userValidator = userValidator;
             _facade = facade;
+            _mailSender = mailSender;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         [HttpGet]
         public IActionResult Register()
@@ -37,7 +46,7 @@ namespace Endpoint.Site.Controllers
                 return View();
             }
 
-            var role = _facade.GetRoles.Execute().Data.Where(p=>p.Name == "Customer").FirstOrDefault();
+            var role = _facade.GetRoles.Execute().Data.Where(p => p.Name == "Customer").FirstOrDefault();
             var user = _facade.AddUser.Execute(new UserDto
             {
                 Email = dto.Email,
@@ -72,6 +81,13 @@ namespace Endpoint.Site.Controllers
                     ExpiresUtc = DateTime.Now.AddDays(20),
                 };
                 HttpContext.SignInAsync(principal, properties);
+
+                //send confirmation email
+                var userConfirm = _userManager.FindByIdAsync(user.Data.UserId).Result;
+                var token = _userManager.GenerateEmailConfirmationTokenAsync(userConfirm).Result;
+                string callbackUrl = Url.Action("ConfirmEmail", "Authentication", new { userId = userConfirm.Id, token = token }, Request.Scheme);
+                string body = $"Click the link for email confirmation  <br/> <a href={callbackUrl}> Link </a>";
+                var emailResult = _mailSender.Execute(userConfirm.Email, body, "Email Confirmation");
             }
             return View();
         }
@@ -80,6 +96,7 @@ namespace Endpoint.Site.Controllers
         {
             return View();
         }
+
 
         [HttpPost]
         public IActionResult Login(LoginDto login)
@@ -122,6 +139,16 @@ namespace Endpoint.Site.Controllers
         public new IActionResult SignOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return BadRequest();
+            }
+            _facade.ConfirmEmail.Execute(userId, token);
             return RedirectToAction("Index", "Home");
         }
     }
