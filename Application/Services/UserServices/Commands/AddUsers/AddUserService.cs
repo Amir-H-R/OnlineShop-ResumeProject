@@ -1,6 +1,8 @@
 ﻿using Application.Interface.Context;
+using Application.Services.Commands.AddUsers;
 using Common;
 using Domain.Entities.Users_n_Roles;
+using Microsoft.AspNetCore.Identity;
 using Store.Common;
 
 namespace Application.Services.Commands.AddUsers
@@ -28,7 +30,7 @@ namespace Application.Services.Commands.AddUsers
             List<UserRoles> userRoles = new List<UserRoles>();
             foreach (var item in request.Roles)
             {
-                var role = _context.Roles.Find(item.Id);
+                var role = _context.Roles.Where(p => p.Name == item.Name || p.Id == item.Id).FirstOrDefault();
                 userRoles.Add(new UserRoles
                 {
                     Role = role,
@@ -51,6 +53,73 @@ namespace Application.Services.Commands.AddUsers
                 Message = "کاربر با موفقیت ثبت شد"
             };
         }
+    }
+}
+
+public class AddIdentityUser : IAddUserService
+{
+    private readonly UserManager<User> _userManager;
+    private readonly RoleManager<Role> _roleManager;
+    public AddIdentityUser(UserManager<User> userManager, RoleManager<Role> roleManager)
+    {
+        _userManager = userManager;
+        _roleManager = roleManager;
+    }
+
+    public ResultDto<UsersRegistrationResult> Execute(UserDto userdto)
+    {
+        try
+        {
+            User user = new User()
+            {
+                Email = userdto.Email,
+                FullName = userdto.FullName,
+                PhoneNumber = userdto.PhoneNumber,
+                UserName = userdto.Email,
+            };
+            var result = _userManager.CreateAsync(user, userdto.Password).Result;
+
+            var user1 = _userManager.FindByEmailAsync(user.Email).Result;
+            var role = _roleManager.FindByIdAsync(userdto.Roles.FirstOrDefault().Id).Result;
+            var roleResult = _userManager.AddToRoleAsync(user, role.Name).Result;
+            if (result.Succeeded && roleResult.Succeeded)
+            {
+                List<UserRoles> userRoles = new List<UserRoles>()
+                {
+                    new UserRoles
+                    {
+                        Role = role,
+                    RoleId = role.Id,
+                    User = user,
+                    UserId = (user.Id)
+                    }
+                };
+                return new ResultDto<UsersRegistrationResult>()
+                {
+                    Data = new UsersRegistrationResult()
+                    {
+                        UserId = user.Id,
+                        UserRoles = userRoles
+                    },
+                    IsSuccess = true,
+                    Message = "Registeration Succussful"
+                };
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        catch
+        {
+            return new ResultDto<UsersRegistrationResult>()
+            {
+                IsSuccess = false,
+                Message = "Error"
+            };
+        }
+
+
     }
 }
 

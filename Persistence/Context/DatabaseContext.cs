@@ -19,7 +19,7 @@ namespace Persistence.Context
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        public DatabaseContext(DbContextOptions options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
 
         }
@@ -90,16 +90,16 @@ namespace Persistence.Context
     }
 
 
-    public class IdentityDatabaseContext : IdentityDbContext<User, Role, string,IdentityUserClaim<string>,UserRoles,IdentityUserLogin<string>,IdentityRoleClaim<string>,IdentityUserToken<string>>
+    public class IdentityDatabaseContext : IdentityDbContext<User, Role, string,IdentityUserClaim<string>,IdentityUserRole<string>,IdentityUserLogin<string>,IdentityRoleClaim<string>,IdentityUserToken<string>>,IDatabaseContext
     {
-        public IdentityDatabaseContext(DbContextOptions options) : base(options)
+        public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : base(options)
         {
-
+            
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRoles> UserRoles { get; set; }
+        //public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
@@ -112,11 +112,19 @@ namespace Persistence.Context
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override  void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(p => new { p.ProviderKey, p.LoginProvider});
+            modelBuilder.Entity<IdentityUserToken<string>>().HasKey(p => new { p.Name, p.LoginProvider,p.UserId });
+            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(p => new { p.RoleId,p.UserId });
+            //modelBuilder.Entity<UserRoles>().HasKey(p => new { p.RoleId, p.UserId });
+      
             ApplyQueryFilter(modelBuilder);
-
+         
             modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
+            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
+            modelBuilder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
+            
 
             modelBuilder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Order>().HasOne(p => p.PaymentRequest).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
@@ -128,7 +136,7 @@ namespace Persistence.Context
         {
             modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Role>().HasQueryFilter(p => !p.IsRemoved);
-            modelBuilder.Entity<UserRoles>().HasQueryFilter(p => !p.IsRemoved);
+            //modelBuilder.Entity<UserRoles>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Category>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<ProductFeature>().HasQueryFilter(p => !p.IsRemoved);

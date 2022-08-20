@@ -46,7 +46,9 @@ builder.Services.AddAuthentication(options =>
 
 //Facade(s) and services Injection
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
+builder.Services.AddIdentity<User,Role>().AddEntityFrameworkStores<IdentityDatabaseContext>().AddDefaultTokenProviders();
+//builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
+builder.Services.AddScoped<IDatabaseContext, IdentityDatabaseContext>();
 builder.Services.AddScoped<Endpoint.Site.Utilities.ICookieManager, CookieManager>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
@@ -70,7 +72,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
 //builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopDb")));
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopIdentityDb")));
+builder.Services.AddEntityFrameworkSqlServer().AddDbContext<IdentityDatabaseContext>(option => option.UseSqlServer(configuration.GetConnectionString("OnlineShopIdentityDb")));
 
 var app = builder.Build();
 //Middlewares

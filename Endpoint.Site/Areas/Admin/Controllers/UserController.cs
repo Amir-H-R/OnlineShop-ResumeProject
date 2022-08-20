@@ -4,6 +4,7 @@ using Application.Validator.Users;
 using Domain.Entities.Users_n_Roles;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,11 +14,13 @@ namespace Endpoint.Site.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IUserFacade _facade;
+        private readonly UserManager<User> _userManager;
         private readonly IValidator<UserDto> _validations;
-        public UserController(IUserFacade facade, IValidator<UserDto> validations)
+        public UserController(IUserFacade facade, IValidator<UserDto> validations,UserManager<User> userManager)
         {
             _facade = facade;
             _validations = validations;
+            _userManager = userManager;
         }
 
         public IActionResult Index(string searchKey, int page = 1)
@@ -38,7 +41,7 @@ namespace Endpoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(UserDto userDto, long RoleId)
+        public IActionResult Create(UserDto userDto, string RoleId)
         {
             ViewBag.Roles = new SelectList(_facade.GetRoles.Execute().Data, "Id", "Name");
 
@@ -65,6 +68,16 @@ namespace Endpoint.Site.Areas.Admin.Controllers
                     }
                 }
             });
+
+            User user = new User()
+            {
+                Email = userDto.Email,
+                FullName = userDto.FullName,
+                PhoneNumber = userDto.PhoneNumber,
+                UserName = userDto.Email,
+            };
+            //var re = _userManager.AddToRoleAsync(user, "Admin").Result;
+
 
             return View(userDto);
         }
@@ -94,7 +107,7 @@ namespace Endpoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UserDto user, long UserId)
+        public IActionResult Edit(UserDto user, string UserId)
         {
 
             var result = _facade.EditUser.Execute(new UserDto

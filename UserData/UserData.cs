@@ -13,7 +13,7 @@
                 Email = "Test@Test.com",
                 Password = "TestingPassword",
                 RePassword = "TestingPassword",
-                PhoneNumber = 00000000000,
+                PhoneNumber = "00000000000",
                 Roles = GetRoles(), } }
             });
             users.Add(new object[] { new List<UserDto>
@@ -23,7 +23,7 @@
                 Email = "Test2@Test.com",
                 Password = "Testing2Password",
                 RePassword = "Testing2Password",
-                PhoneNumber = 00000000001,
+                PhoneNumber = "00000000001",
                 Roles = GetRoles(),} }
             });
             users.Add(new object[] { new List<UserDto>
@@ -33,7 +33,7 @@
                 Email = "Test3@Test.com",
                 Password = "Testing3Password",
                 RePassword = "Testing3Password",
-                PhoneNumber = 00000000010,
+                PhoneNumber = "00000000010",
                 Roles = GetRoles(),} }
             });
 
@@ -43,9 +43,9 @@
         public static List<RoleDto> GetRoles()
         {
             List<RoleDto> roles = new List<RoleDto>();
-            roles.Add(new RoleDto { Name = "Admin",Id = 1 });
-            roles.Add(new RoleDto { Name = "Operator", Id = 2 });
-            roles.Add(new RoleDto { Name = "Customer", Id = 3 });
+            roles.Add(new RoleDto { Name = "Admin",Id = Guid.NewGuid().ToString() });
+            roles.Add(new RoleDto { Name = "Operator", Id =Guid.NewGuid().ToString() });
+            roles.Add(new RoleDto { Name = "Customer", Id = Guid.NewGuid().ToString() });
             return roles;
         }
     }

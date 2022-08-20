@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Security.Claims;
 
 namespace Endpoint.Site.Controllers
@@ -36,6 +37,7 @@ namespace Endpoint.Site.Controllers
                 return View();
             }
 
+            var role = _facade.GetRoles.Execute().Data.Where(p=>p.Name == "Customer").FirstOrDefault();
             var user = _facade.AddUser.Execute(new UserDto
             {
                 Email = dto.Email,
@@ -47,14 +49,15 @@ namespace Endpoint.Site.Controllers
                 {
                     new RoleDto
                     {
-                        Id  = UserDefaultRolesId.Customer
+                        Name = role.Name,
+                        Id = role.Id
                     }
                 }
             });
 
             if (user.IsSuccess == true)
             {
-                var claims = new List<Claim>
+                var claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier,user.Data.UserId.ToString()),
                     new Claim(ClaimTypes.Email,dto.Email),

@@ -15,5 +15,6 @@ namespace Domain.Entities.Users_n_Roles
         public DateTime? RemoveTime { get; set; }
 
         public virtual ICollection<UserRoles> UserRoles{ get; set; }
+        public virtual ICollection<User> Users{ get; set; }
     }
 }

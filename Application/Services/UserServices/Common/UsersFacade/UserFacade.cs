@@ -4,7 +4,10 @@ using Application.Services.Commands.RemoveUser;
 using Application.Services.Queries.GetRoles;
 using Application.Services.Queries.GetUsers;
 using Application.Services.UserService.Commands.UserLogin;
+using Application.Services.UserServices.Commands.AddRole;
 using Application.Services.UserServices.Commands.EditUser;
+using Domain.Entities.Users_n_Roles;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +19,13 @@ namespace Application.Services.Common.UsersFacade
     public class UserFacade : IUserFacade
     {
         private readonly IDatabaseContext _context;
-        public UserFacade(IDatabaseContext context)
+        private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<User> _userManager;
+        public UserFacade(IDatabaseContext context, RoleManager<Role> roleManager, UserManager<User> userManager)
         {
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         private IGetRolesService _getRoles;
@@ -48,12 +55,20 @@ namespace Application.Services.Common.UsersFacade
         }
 
 
-        private AddUserService _addUser;
-        public AddUserService AddUser
+        //private AddUserService _addUser;
+        //public AddUserService AddUser
+        //{
+        //    get
+        //    {
+        //        return _addUser = _addUser ?? new AddUserService(_context);
+        //    }
+        //}
+        private AddIdentityUser _addUser;
+        public AddIdentityUser AddUser
         {
             get
             {
-                return _addUser = _addUser ?? new AddUserService(_context);
+                return _addUser = _addUser ?? new AddIdentityUser(_userManager,_roleManager);
             }
         }
 
@@ -74,5 +89,15 @@ namespace Application.Services.Common.UsersFacade
                 return _editUser = _editUser ?? new EditUserService(_context);
             }
         }
+
+        private AddRoleService _addRole;
+        public AddRoleService AddRole
+        {
+            get
+            {
+                return _addRole ?? new AddRoleService(_roleManager);
+            }
+        }
+
     }
 }

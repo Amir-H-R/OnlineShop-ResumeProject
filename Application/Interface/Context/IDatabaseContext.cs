@@ -18,7 +18,7 @@ namespace Application.Interface.Context
     {
         DbSet<User> Users { get; set; }
         DbSet<Role> Roles { get; set; }
-        DbSet<UserRoles> UserRoles { get; set; }
+        //DbSet<UserRoles> UserRoles { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<ProductFeature> ProductFeatures { get; set; }

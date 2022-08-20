@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,12 @@ namespace Domain.Entities.Users_n_Roles
         public bool IsRemoved { get; set; } = false;
         public DateTime? RemoveTime { get; set; }
 
+        public virtual ICollection<IdentityRoleClaim<string>> RoleClaims { get;  set; }
+        public virtual ICollection<IdentityUserClaim<string>> UserClaims { get;  set; }
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get;  set; }
+        public virtual ICollection<IdentityUserToken<string>> UserTokens{ get;  set; }
         public virtual ICollection<UserRoles> UserRoles { get; set; }
+        public virtual ICollection<Role> Roles{ get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
