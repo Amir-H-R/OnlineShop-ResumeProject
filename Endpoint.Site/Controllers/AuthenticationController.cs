@@ -109,9 +109,54 @@ namespace Endpoint.Site.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if (signinResult.RequiresTwoFactor)
+            {
+                return RedirectToAction("TwoFactorLogin", new { email, isPersistent });
+            }
             else
             {
                 return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult TwoFactorLogin(string email, bool isPersistent)
+        {
+            var user = _userManager.FindByEmailAsync(email).Result;
+            var providers = _userManager.GetValidTwoFactorProvidersAsync(user).Result;
+
+            LoginDto loginDto = new LoginDto();
+            if (providers.Contains("Phone"))
+            {
+                //
+            }
+            if (providers.Contains("Email"))
+            {
+                string emailCode = _userManager.GenerateTwoFactorTokenAsync(user, "Email").Result;
+                _mailSender.Execute(user.Email, $"Two Factor Code:{emailCode}", "Two Factor Login Code");
+                loginDto.Provider = "Email";
+                loginDto.IsPersistent = isPersistent;
+            }
+            return View(loginDto);
+        }
+        [HttpPost]
+        public IActionResult TwoFactorLogin(string code, string provider, bool isPersistent)
+        {
+            var userResult = _signInManager.GetTwoFactorAuthenticationUserAsync().Result;
+            if (userResult == null)
+            {
+                return BadRequest();
+            }
+
+            var loginResult = _signInManager.TwoFactorSignInAsync(provider, code, isPersistent, false).Result;
+            if (loginResult.Succeeded)
+            {
+                return RedirectToAction("index", "home");
+            }
+            else
+            {
+                ModelState.AddModelError(" ", "There is a problem in your account. Contact admins");
+                return View();
             }
         }
 
@@ -155,9 +200,15 @@ namespace Endpoint.Site.Controllers
 
         public new IActionResult SignOut()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        //public new IActionResult SignOut()
+        //{
+        //    HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         public IActionResult ConfirmEmail(string userId, string token)
         {
@@ -175,7 +226,7 @@ namespace Endpoint.Site.Controllers
         {
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             var result = _userManager.SetTwoFactorEnabledAsync(user, !user.TwoFactorEnabled).Result;
-            return RedirectToAction("Dashboard","Home");
+            return RedirectToAction("Dashboard", "Home");
         }
     }
 }
