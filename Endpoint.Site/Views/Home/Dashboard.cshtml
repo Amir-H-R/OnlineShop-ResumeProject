@@ -1,0 +1,50 @@
+﻿@model UserDto
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-area">
+
+    <!-- PAGE -->
+    <section class="page-section color">
+        <div class="container" dir="ltr">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="block-title"><span>Dashboard</span></h3>
+                    <form class="form-login">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label asp-for="FullName"></label>
+                                <div class="form-group"><input asp-for="FullName" style="pointer-events:none"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="Email"></label>
+                                <div class="form-group"><input asp-for="Email" style="pointer-events:none"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="EmailConfirmed"></label>
+                                <div class="form-group"><input asp-for="EmailConfirmed" style="pointer-events:none"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="PhoneNumber"></label>
+                                <div class="form-group"><input asp-for="PhoneNumber" style="pointer-events:none"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="PhoneNumberConfirmed"></label>
+                                <div class="form-group"><input asp-for="PhoneNumberConfirmed" style="pointer-events:none"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="TwoFactorEnabled"></label>
+                                <div class="form-group"><input asp-for="TwoFactorEnabled" style="pointer-events:none"></div>
+                                <a asp-action="TFASC" asp-controller="Authentication">click to change</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /PAGE -->
+</div>
+

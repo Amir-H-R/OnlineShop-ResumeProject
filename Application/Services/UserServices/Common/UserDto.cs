@@ -6,5 +6,9 @@
     public string PhoneNumber { get; set; }
     public string Password { get; set; }
     public string RePassword { get; set; }
+    public bool EmailConfirmed { get; set; }
+    public bool TwoFactorEnabled { get; set; }
+    public bool PhoneNumberConfirmed { get; set; }
+
     public List<RoleDto> Roles { get; set; }
 }

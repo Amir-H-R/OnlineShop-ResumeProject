@@ -7,6 +7,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -97,44 +98,60 @@ namespace Endpoint.Site.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult Login(LoginDto login)
+        public IActionResult Login(string email, string password, bool isPersistent)
         {
-            ValidationResult result = _loginValidator.Validate(login);
-            if (!result.IsValid)
+            var user = _userManager.FindByEmailAsync(email).Result;
+
+            _signInManager.SignOutAsync();
+            var signinResult = _signInManager.PasswordSignInAsync(user, password, isPersistent, false).Result;
+            if (signinResult.Succeeded)
             {
-                ViewBag.Validation = result.Errors[0].ErrorMessage;
-                return View(login);
+                return RedirectToAction("Index", "Home");
             }
-
-            var user = _facade.UserLogin.Execute(login);
-            if (user.IsSuccess == true)
+            else
             {
-                var claims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.NameIdentifier,user.Data.UserId.ToString()),
-                    new Claim(ClaimTypes.Name,user.Data.Name),
-
-                    new Claim(ClaimTypes.Email,user.Data.Email)
-                };
-                foreach (var item in user.Data.Role)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, item));
-                }
-
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-                var properties = new AuthenticationProperties()
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTime.Now.AddDays(20)
-                };
-                HttpContext.SignInAsync(principal, properties);
+                return BadRequest();
             }
-
-            return RedirectToAction("Index", "Home");
         }
+
+        //[HttpPost]
+        //public IActionResult Login(LoginDto login)
+        //{
+        //    ValidationResult result = _loginValidator.Validate(login);
+        //    if (!result.IsValid)
+        //    {
+        //        ViewBag.Validation = result.Errors[0].ErrorMessage;
+        //        return View(login);
+        //    }
+
+        //    var user = _facade.UserLogin.Execute(login);
+        //    if (user.IsSuccess == true)
+        //    {
+        //        var claims = new List<Claim>()
+        //        {
+        //            new Claim(ClaimTypes.NameIdentifier,user.Data.UserId.ToString()),
+        //            new Claim(ClaimTypes.Name,user.Data.Name),
+
+        //            new Claim(ClaimTypes.Email,user.Data.Email)
+        //        };
+        //        foreach (var item in user.Data.Role)
+        //        {
+        //            claims.Add(new Claim(ClaimTypes.Role, item));
+        //        }
+
+        //        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //        var principal = new ClaimsPrincipal(identity);
+        //        var properties = new AuthenticationProperties()
+        //        {
+        //            IsPersistent = true,
+        //            ExpiresUtc = DateTime.Now.AddDays(20)
+        //        };
+        //        HttpContext.SignInAsync(principal, properties);
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         public new IActionResult SignOut()
         {
@@ -150,6 +167,15 @@ namespace Endpoint.Site.Controllers
             }
             _facade.ConfirmEmail.Execute(userId, token);
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [HttpGet("[Controller]/TFASC")]
+        public IActionResult TwoFactorAuthenticationStatusChange()
+        {
+            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            var result = _userManager.SetTwoFactorEnabledAsync(user, !user.TwoFactorEnabled).Result;
+            return RedirectToAction("Dashboard","Home");
         }
     }
 }

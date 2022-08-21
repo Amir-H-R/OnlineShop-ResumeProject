@@ -23,16 +23,16 @@
     <link href="~/Template-Site/assets/plugins/animate/animate.min.css" rel="stylesheet">
 
     @*<!-- Css Themes-->
-      <link href="~/Template-Site/assets/css/theme.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-blue-1.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-blue-2.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-cumin.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-gold.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-gray.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-green-1.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-green-2.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-orange-1.css" rel="stylesheet">
-      <link href="~/Template-Site/assets/css/theme-orange-2.css" rel="stylesheet">*@
+    <link href="~/Template-Site/assets/css/theme.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-blue-1.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-blue-2.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-cumin.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-gold.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-gray.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-green-1.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-green-2.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-orange-1.css" rel="stylesheet">
+    <link href="~/Template-Site/assets/css/theme-orange-2.css" rel="stylesheet">*@
 
     <!-- Theme CSS -->
 
@@ -51,17 +51,17 @@
 <body id="home" class="wide">
     <!-- PRELOADER -->
     @* <div id="preloader">
-        <div id="preloader-status">
-        <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-        </div>
-        <div id="preloader-title">Loading</div>
-        </div>
-        </div>*@
+    <div id="preloader-status">
+    <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+    </div>
+    <div id="preloader-title">Loading</div>
+    </div>
+    </div>*@
     <!-- /PRELOADER -->
     <!-- WRAPPER -->
     <div class="wrapper">
@@ -76,14 +76,20 @@
                         {
                             <li class="icon-user"><a href="~/Authentication/login"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>ورود</span></a></li>
                             <li class="icon-form"><a href="~/Authentication/register"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>هنوز عضو نشده‌اید؟ <span class="colored">ثبت نام کنید</span></span></a></li>
+                            <li class="icon-user"><a href="~/admin"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Admin Panel</span></a></li>
+                            <li class="icon-user"><a href="~/"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>Help</span></a></li>
+
                         }
                         else
                         {
+                            <li class="icon-user"><a href="~/admin"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Admin Panel</span></a></li>
                             <li class="icon-user"><a href="#"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Welcome to the site, @User.Identity.Name</span></a></li>
+                            <li class="icon-user"><a href="~/"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>Help</span></a></li>
+
                             <li class="dropdown currency">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panel<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="#">Dashboard</a></li>
+                                    <li><a href="~/dashboard">Dashboard</a></li>
                                     <li><a href="#">Setting</a></li>
                                     <li><a href="~/authentication/signout">Sign Out</a></li>
                                 </ul>
@@ -265,16 +271,16 @@
     </div>
 
     <!-- /WRAPPER -->
-  @*  <!-- JS Custum-->
- <script src="~/Template-Site/assets/plugins/jquery/jquery-1.11.1.js"></script>
- <script src="~/Template-Site/assets/plugins/jquery/jquery-2.1.1.js"></script>
- <script src="~/Template-Site/assets/plugins/jquery/jquery-2.1.1.min.js"></script>
- <script src="~/Template-Site/assets/plugins/jqueryjquery-migrate-1.2.1.js"></script>
- <script src="~/Template-Site/assets/plugins/jqueryjquery-migrate-1.2.1.min.js"></script>
- <script src="~/Template-Site/assets/plugins/jquery-ui-1.11.1.min.js"></script>*@
+    @*  <!-- JS Custum-->
+    <script src="~/Template-Site/assets/plugins/jquery/jquery-1.11.1.js"></script>
+    <script src="~/Template-Site/assets/plugins/jquery/jquery-2.1.1.js"></script>
+    <script src="~/Template-Site/assets/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Template-Site/assets/plugins/jqueryjquery-migrate-1.2.1.js"></script>
+    <script src="~/Template-Site/assets/plugins/jqueryjquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Template-Site/assets/plugins/jquery-ui-1.11.1.min.js"></script>*@
 
     <!-- JS Global -->
-   
+
     <script src="~/Template-Site/assets/plugins/jquery/jquery-1.11.1.min.js"></script>
     <script src="~/Template-Site/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Template-Site/assets/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
