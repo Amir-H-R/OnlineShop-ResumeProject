@@ -210,6 +210,7 @@ namespace Endpoint.Site.Controllers
         //    return RedirectToAction("Index", "Home");
         //}
 
+        [Authorize]
         public IActionResult ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)

@@ -47,10 +47,23 @@ builder.Services.AddAuthentication(options =>
 
 //Facade(s) and services Injection
 builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddIdentity<User,Role>().AddEntityFrameworkStores<IdentityDatabaseContext>().AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options => {
+    options.User.RequireUniqueEmail = true;
+    });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath=new PathString("/authentication/login");
+
+});
+
 //builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 builder.Services.AddScoped<IDatabaseContext, IdentityDatabaseContext>();
+
 builder.Services.AddScoped<Endpoint.Site.Utilities.ICookieManager, CookieManager>();
+
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
