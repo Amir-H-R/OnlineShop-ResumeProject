@@ -16,5 +16,6 @@ namespace Domain.Entities.Users_n_Roles
 
         public virtual ICollection<UserRoles> UserRoles{ get; set; }
         public virtual ICollection<User> Users{ get; set; }
+        public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; }
     }
 }
