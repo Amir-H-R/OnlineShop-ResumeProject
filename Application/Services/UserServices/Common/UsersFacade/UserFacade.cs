@@ -42,7 +42,7 @@ namespace Application.Services.Common.UsersFacade
         {
             get
             {
-                return _getUsersService = _getUsersService ?? new GetUsersService(_context);
+                return _getUsersService = _getUsersService ?? new GetIdentityUsersService(_userManager,_roleManager);
             }
         }
 
