@@ -1,11 +1,13 @@
 ﻿using Application.Services.Common.UsersFacade;
 using Domain.Entities.Users_n_Roles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.Site.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<Role> _roleManager;

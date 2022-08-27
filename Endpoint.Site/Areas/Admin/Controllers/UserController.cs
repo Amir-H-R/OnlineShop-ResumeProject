@@ -4,6 +4,7 @@ using Application.Validator.Users;
 using Domain.Entities.Users_n_Roles;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,18 +12,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Endpoint.Site.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="Admin")]
     public class UserController : Controller
     {
         private readonly IUserFacade _facade;
         private readonly UserManager<User> _userManager;
         private readonly IValidator<UserDto> _validations;
-        public UserController(IUserFacade facade, IValidator<UserDto> validations,UserManager<User> userManager)
+        public UserController(IUserFacade facade, IValidator<UserDto> validations, UserManager<User> userManager)
         {
             _facade = facade;
             _validations = validations;
             _userManager = userManager;
         }
 
+        public IActionResult Claims()
+                { 
+            return View(User.Claims);
+        }
         public IActionResult Index(string searchKey, int page = 1)
         {
             var res = _facade.GetUsersService.Execute(new GetUsersRequestsDto()
