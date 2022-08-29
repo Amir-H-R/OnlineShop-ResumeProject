@@ -122,9 +122,7 @@ namespace Persistence.Context
             ApplyQueryFilter(modelBuilder);
          
             modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
-            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
-            modelBuilder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
-            
+            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();            
 
             modelBuilder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Order>().HasOne(p => p.PaymentRequest).WithMany(p => p.Orders).OnDelete(DeleteBehavior.NoAction);

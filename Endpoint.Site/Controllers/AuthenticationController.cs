@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 using System.Data;
 using System.Security.Claims;
 
@@ -210,18 +212,18 @@ namespace Endpoint.Site.Controllers
         //    return RedirectToAction("Index", "Home");
         //}
 
-        
+
 
         [Authorize]
         public IActionResult SendConfirmationEmail()
         {
             var user = _userManager.GetUserAsync(User).Result;
-            var tokenResult =_userManager.GenerateEmailConfirmationTokenAsync(user).Result;
-            var url = Url.Action("ConfirmEmail", "Authentication", new { userId = user.Id, token = tokenResult },Request.Scheme);
+            var tokenResult = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+            var url = Url.Action("ConfirmEmail", "Authentication", new { userId = user.Id, token = tokenResult }, Request.Scheme);
             _mailSender.Execute(user.Email, $"click for email confirmation <br/> <a  href={url}>Link</a> ", "Email Confirmation");
             return RedirectToAction("Dashboard", "Home");
         }
-         [Authorize]
+        [Authorize]
         public IActionResult ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
@@ -239,6 +241,62 @@ namespace Endpoint.Site.Controllers
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             var result = _userManager.SetTwoFactorEnabledAsync(user, !user.TwoFactorEnabled).Result;
             return RedirectToAction("Dashboard", "Home");
+        }
+
+        public IActionResult ExternalLogin(string returnUrl)
+        {
+            var callbackUrl = Url.Action("Callback", "Authentication", new { returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", callbackUrl);
+            return new ChallengeResult("Google", properties);
+
+        }
+        public IActionResult Callback(string returnUrl)
+        {
+            try
+            {
+                var loginInfo = _signInManager.GetExternalLoginInfoAsync().Result;
+                var email = loginInfo.Principal.FindFirst(ClaimTypes.Email).Value;
+                var name = loginInfo.Principal.FindFirst(ClaimTypes.Name).Value;
+
+                var signinResult = _signInManager.ExternalLoginSignInAsync("Google", loginInfo.ProviderKey, true, true).Result;
+                var user = _userManager.FindByEmailAsync(email).Result;
+
+                if (signinResult.Succeeded)
+                {
+                    _signInManager.SignInAsync(user, true).Wait();
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (user == null)
+                {
+                    var role = _facade.GetRoles.Execute().Data.Where(p => p.Name == "Customer").FirstOrDefault();
+                    UserDto newUser = new UserDto()
+                    {
+                        Email = email,
+                        FullName = name,
+                        EmailConfirmed = true,
+                        Roles = new List<RoleDto>()
+                        {
+                            new RoleDto
+                             {
+                                 Name = role.Name,
+                                 Id = role.Id
+                             }
+                        },
+                    };
+                    _facade.AddUser.Execute(newUser);
+                    user = _userManager.FindByEmailAsync(newUser.Email).Result;
+                    //user = JsonConvert.DeserializeObject<User>(JsonConvert.SerializeObject(newUser));
+                }
+                var loginResult = _userManager.AddLoginAsync(user, loginInfo).Result;
+                _signInManager.SignInAsync(user, true).Wait();
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                ModelState.AddModelError("Signin Failure", "Signin Failed");
+                return RedirectToAction("Register", "Authentication");
+            }
         }
     }
 }

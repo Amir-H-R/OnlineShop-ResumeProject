@@ -43,6 +43,10 @@ builder.Services.AddAuthentication(options =>
 {
     options.LoginPath = new PathString("/");
     options.ExpireTimeSpan = TimeSpan.FromDays(5);
+}).AddGoogle(options =>
+{
+    options.ClientSecret = "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";
+    options.ClientId = "658748768159-cf7jhqjn4c1f7v8srcphuhr18no3uon6.apps.googleusercontent.com";
 });
 
 //Facade(s) and services Injection

@@ -76,8 +76,19 @@ public class AddIdentityUser : IAddUserService
                 FullName = userdto.FullName,
                 PhoneNumber = userdto.PhoneNumber,
                 UserName = userdto.Email,
+                EmailConfirmed = userdto.EmailConfirmed
             };
-            var userResult = _userManager.CreateAsync(user, userdto.Password).Result;
+
+            IdentityResult userResult;
+            if (userdto.Password != null)
+            {
+                userResult = _userManager.CreateAsync(user, userdto.Password).Result;
+            }
+            else
+            {
+                //For External Signup
+                userResult = _userManager.CreateAsync(user).Result;
+            }
 
             var role = _roleManager.FindByIdAsync(userdto.Roles.FirstOrDefault().Id).Result;
             var roleResult = _userManager.AddToRoleAsync(user, role.Name).Result;
