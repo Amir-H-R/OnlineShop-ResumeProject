@@ -105,13 +105,13 @@ namespace Endpoint.Site.Controllers
 
             _signInManager.SignOutAsync();
             var signinResult = _signInManager.PasswordSignInAsync(user, password, isPersistent, false).Result;
-            if (signinResult.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             if (signinResult.RequiresTwoFactor)
             {
                 return RedirectToAction("TwoFactorLogin", new { email, isPersistent });
+            }
+            if (signinResult.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -210,7 +210,18 @@ namespace Endpoint.Site.Controllers
         //    return RedirectToAction("Index", "Home");
         //}
 
+        
+
         [Authorize]
+        public IActionResult SendConfirmationEmail()
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+            var tokenResult =_userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+            var url = Url.Action("ConfirmEmail", "Authentication", new { userId = user.Id, token = tokenResult },Request.Scheme);
+            _mailSender.Execute(user.Email, $"click for email confirmation <br/> <a  href={url}>Link</a> ", "Email Confirmation");
+            return RedirectToAction("Dashboard", "Home");
+        }
+         [Authorize]
         public IActionResult ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)

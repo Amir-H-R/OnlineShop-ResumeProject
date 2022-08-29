@@ -24,9 +24,9 @@ namespace Application.Services.MailSender
             smtpClient.Timeout = 1000000;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("amirfighter.1383@gmail.com", "qecuidbopxkhbgkg");
+            smtpClient.Credentials = new NetworkCredential("myonlineshoptest5@gmail.com", "zjvbhcpsjgckqpor");
 
-            MailMessage mailMessage = new MailMessage("amirfighter.1383@gmail.com", userEmail, subject, body);
+            MailMessage mailMessage = new MailMessage("myonlineshoptest5@gmail.com", userEmail, subject, body);
 
             mailMessage.IsBodyHtml = true;
             mailMessage.BodyEncoding = UTF8Encoding.UTF8;
