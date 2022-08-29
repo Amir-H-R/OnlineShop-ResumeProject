@@ -22,18 +22,6 @@
     <link href="~/Template-Site/assets/plugins/owl-carousel2/assets/owl.theme.default.min.css" rel="stylesheet">
     <link href="~/Template-Site/assets/plugins/animate/animate.min.css" rel="stylesheet">
 
-    @*<!-- Css Themes-->
-    <link href="~/Template-Site/assets/css/theme.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-blue-1.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-blue-2.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-cumin.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-gold.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-gray.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-green-1.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-green-2.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-orange-1.css" rel="stylesheet">
-    <link href="~/Template-Site/assets/css/theme-orange-2.css" rel="stylesheet">*@
-
     <!-- Theme CSS -->
 
     <link href="~/Template-Site/assets/css/theme.css" rel="stylesheet">
@@ -50,18 +38,6 @@
 </head>
 <body id="home" class="wide">
     <!-- PRELOADER -->
-    @* <div id="preloader">
-    <div id="preloader-status">
-    <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
-    </div>
-    <div id="preloader-title">Loading</div>
-    </div>
-    </div>*@
     <!-- /PRELOADER -->
     <!-- WRAPPER -->
     <div class="wrapper">
@@ -74,22 +50,18 @@
                     <ul class="list-inline">
                         @if (!User.Identity.IsAuthenticated)
                         {
-                            <li class="icon-user"><a href="~/Authentication/login"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>ورود</span></a></li>
-                            <li class="icon-form"><a href="~/Authentication/register"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>هنوز عضو نشده‌اید؟ <span class="colored">ثبت نام کنید</span></span></a></li>
-                            <li class="icon-user"><a href="~/admin"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Admin Panel</span></a></li>
-                            <li class="icon-user"><a href="~/"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>Help</span></a></li>
-
+                            <li class="icon-user"><a href="~/Authentication/login"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Login</span></a></li>
+                            <li class="icon-form"><a href="~/Authentication/register"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span><span class="colored">Register</span></span></a></li>
                         }
                         else
                         {
                             <li class="icon-user"><a href="~/admin"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Admin Panel</span></a></li>
-                            <li class="icon-user"><a href="#"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Welcome to the site, @User.Identity.Name</span></a></li>
                             <li class="icon-user"><a href="~/"><img src="~/Template-Site/assets/img/icon-2.png" alt="" /> <span>Help</span></a></li>
+                            <li class="icon-user"><a href="~/Dashboard"><img src="~/Template-Site/assets/img/icon-1.png" alt="" /> <span>Dashboard</span></a></li>
 
                             <li class="dropdown currency">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panel<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="~/dashboard">Dashboard</a></li>
                                     <li><a href="#">Setting</a></li>
                                     <li><a href="~/authentication/signout">Sign Out</a></li>
                                 </ul>
@@ -99,13 +71,12 @@
                 </div>
                 <div class="top-bar-right">
                     <ul class="list-inline">
-                        <li class="hidden-xs"><a href="about.html">درباره ما</a></li>
-                        <li class="hidden-xs"><a href="blog.html">بلاگ</a></li>
-                        <li class="hidden-xs"><a href="contact.html">تماس با ما</a></li>
+                        <li class="hidden-xs"><a href="about.html">About Us</a></li>
+                        <li class="hidden-xs"><a href="blog.html">Blog</a></li>
+                        <li class="hidden-xs"><a href="contact.html">Contact Us</a></li>
                         <li class="hidden-xs"><a href="faq.html">FAQ</a></li>
-                        <li class="hidden-xs"><a href="wishlist.html">لیست من</a></li>
                         <li class="dropdown currency">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">ريال<i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">$<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="dropdown-menu">
                                 <li><a href="#">€ EURO</a></li>
                                 <li><a href="#">€ EURO</a></li>
@@ -133,7 +104,7 @@
                     <!-- Logo -->
                     <div class="logo">
                         <!--   <h1 class="" style="color:black; outline-width:thick"> BELLA SHOP</h1> -->
-                        <a href="~/"><img src="~/Template-Site/assets/img/logo-bella-shop.png" alt="بـــلا شاپ" /></a>
+                        <a href="~/"><img src="~/Template-Site/assets/img/logo-bella-shop.png" alt="Bella Shop" /></a>
                     </div>
                     <!-- /Logo -->
                     <!-- Header search -->
@@ -161,10 +132,10 @@
                         <a href="#" class="menu-toggle-close btn"><i class="fa fa-times"></i></a>
                         <ul class="nav sf-menu">
                             <li class="active">
-                                <a href="~/" class="">صفحه اصلی</a>
+                                <a href="~/" class="">HomePage</a>
                             </li>
                             <li class="active">
-                                <a href="~/product" class="">کالا ها</a>
+                                <a href="~/product" class="">Products</a>
                             </li>
                             @await Component.InvokeAsync("GetMenu")
                         </ul>

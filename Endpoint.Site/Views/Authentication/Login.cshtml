@@ -12,45 +12,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="block-title"><span>ورود</span></h3>
+                    <h3 class="block-title"><span>Login</span></h3>
                     <form action="#" class="form-login" method="post">
                         <div class="row">
                             <div class="col-md-12 hello-text-wrap ">
-                                <span class="hello-text text-thin">به حساب خود خوش آمدید</span>
+                                <div asp-validation-summary="ModelOnly"></div>
                             </div>
                             <div class="col-md-12 col-lg-6">
-                                <a asp-action="ExternalLogin" asp-controller="Authentication" class="btn btn-theme btn-block btn-icon-left google"><i class="fa fa-facebook"></i>Login wth Google</a>
+                                <a asp-action="ExternalLogin" asp-controller="Authentication" class="btn btn-theme btn-block btn-icon-left"><i class=""></i>Login with Google</a>
                             </div>
                             <div class="col-md-12 col-lg-6">
-                                <a class="btn btn-theme btn-block btn-icon-left twitter" href="#"><i class="fa fa-twitter"></i>ورود با توییتر</a>
+                                <a class="btn btn-theme btn-block btn-icon-left twitter" href="#"><i class="fa fa-twitter"></i>Login With Twitter</a>
                             </div>
                             <div class="col-md-12">
                                 <p  class="text-danger">@ViewBag.Validation</p>
                            @*      <span asp-validation-for="Password" class="text-danger"> </span>
                                  <span asp-validation-for="Email" class="text-danger"> </span>*@
-                                <div class="form-group"><input id="Email" name="Email" class="form-control" type="text" placeholder="ایمیل"></div>
+                                <div class="form-group"><input id="Email" name="Email" class="form-control" type="text" placeholder="Email"></div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group"><input id="Password" name="Password"  class="form-control" type="password" placeholder="پسوورد"></div>
+                                <div class="form-group"><input id="Password" name="Password"  class="form-control" type="password" placeholder="Password"></div>
                             </div>
                             <div class="col-md-12 col-lg-6">
                                 <div class="checkbox">
-                                    <label>مرا بخاطر بسپار</label>
+                                    <label>Remember Me</label>
                                     <input name="isPersistent" id="isPersistent" data-val="true" value="true" type="checkbox" />
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-6 text-right-lg">
                              
-                                <label>  <a class="forgot-password" href="#">فراموشی رمز؟</a> </label>
+                                <label>  <a class="forgot-password" href="#">Forgot Password</a> </label>
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-theme btn-block btn-theme-dark " type="submit">ورود</button>
+                                <button class="btn btn-theme btn-block btn-theme-dark " type="submit">Login</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="col-sm-6">
-                    <h3 class="block-title"><span>ساخت اکانت جدید</span></h3>
+                    <h3 class="block-title"><span>Create New Account</span></h3>
                     <form action="#" class="create-account">
                         <div class="row">
                             <div class="col-md-12 hello-text-wrap">
@@ -67,7 +67,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-6">
-                                <a class="btn btn-block btn-theme btn-theme-dark btn-create" href="~/Authentication/register"> ساخت اکانت </a>
+                                <a class="btn btn-block btn-theme btn-theme-dark btn-create" href="~/Authentication/register"> Register </a>
                             </div>
                         </div>
                     </form>
