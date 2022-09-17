@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Endpoint.WebApi.Controllers
+namespace Endpoint.WebApi.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    //api/v1/users
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
